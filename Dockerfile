@@ -16,5 +16,5 @@ EXPOSE 3000
 CMD ["npm", "run", "start"]
 
 FROM nginx:alpine
-COPY --from=backend /app/backend/build/libs/app.jar /app.jar
-COPY --from=frontend /app/frontend/dist /usr/share/nginx/html
+COPY --from=backend /demogameproject/demo/build/libs/app.jar /app.jar
+COPY --from=frontend /demogameproject/nextdemo/dist /usr/share/nginx/html
