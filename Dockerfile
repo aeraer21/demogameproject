@@ -8,7 +8,7 @@ CMD ["java", "-jar", "app.jar"]
 
 FROM node:20 as frontend
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY nextdemo/package.json nextdemo/package-lock.json ./
 RUN npm install
 COPY . .
 RUN npm run build
