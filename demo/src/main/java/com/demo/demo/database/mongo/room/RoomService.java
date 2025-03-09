@@ -10,8 +10,12 @@ import org.springframework.stereotype.Service;
 public class RoomService {
     @Autowired
     private RoomsRepository roomsRepository;
+    private final HashOperations<String, String, Object> hashOperations;
+
     @Autowired
-    private HashOperations<String, String, String> hashOperations;
+    public RoomService(HashOperations<String, String, Object> hashOperations) {
+        this.hashOperations = hashOperations;
+    }
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public Room getRoomByRoomId(String id) {
