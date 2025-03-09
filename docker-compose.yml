@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  spring-app:
+    build:
+      context: ./demo
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: "prod"
+      MYSQL_HOST: mariadb
+      MONGO_HOST: mongodb
+    depends_on:
+      - mariadb
+      - mongodb
+    networks:
+      - my-network
+
+  nextjs-app:
+    build:
+      context: ./nextdemo
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - spring-app
+    networks:
+      - my-network
+
+  mariadb:
+    image: mariadb:11.7.2
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: yjm
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456
+    ports:
+      - "3306:3306"
+    networks:
+      - my-network
+
+  mongodb:
+    image: mongo:8.0.5
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    ports:
+      - "27017:27017"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
